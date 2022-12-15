@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <br><br><br>
+
+    <div class="container">
+        <a href="{{ url_for('profile') }}" class="btn btn-light" style="text-decoration: none">
+            Back to profile
+        </a>
+        <center>
+            <h3 style="background-color: gray; color: white; width: 380px; border-radius: 10px">Orders history</h3>
+            <div class="card" style="width: 380px;">
+                <ul class="list-group list-group-flush">
+                    {% for order in orders %}
+                        <a href="{{ url_for('order_page', page_id=order.id) }}" class="link-dark"
+                           style="text-decoration: none;">
+                            <li class="list-group-item"
+                                style="background-color: orange; color: white; border-radius: 10px; border: solid black 1px">
+                                Order created on {{ order.created_date }}
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </center>
+    </div>
+{% endblock %}

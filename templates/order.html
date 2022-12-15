@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <br><br><br>
+    <div class="container">
+        <a href="{{ url_for('orders_page') }}" class="btn btn-light">Back to orders</a>
+        <center>
+            <div class="row" style="width: 60%">
+                <div class="col-sm-6">
+                    <h4 style="background-color: gray; color: white; border: solid black 1px; border-radius: 10px">
+                        Order created
+                        on {{ order.created_date }}
+                    </h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4 style="background-color: green; border: solid black 1px; border-radius: 10px; color: white">
+                        Total: {{ order.summa }} eth
+                    </h4>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4" style="width: 60%">
+                {% for advert in adverts %}
+                    <center>
+                        <div class="col">
+                            <a href="{{ url_for('advert', page_id=advert.id) }}" class="link-dark"
+                               style="text-decoration: none;">
+                                <div class="card" style="border: solid black 3px">
+                                    <div style="overflow: hidden; height: 300px;">
+                                        <img src="{{ advert.image_url }}" class="card-img-top"
+                                             alt="{{ advert.title }}"
+                                             style="width: 100%; height: 100%; object-fit: cover">
+                                    </div>
+                                    <div class="card-body" style="background-color: orange">
+                                        <p class="card-text"
+                                           style="background-color: greenyellow; margin-left: 70px; margin-right: 70px; border: solid black 1px; border-radius: 10px">{{ advert.price }}
+                                            eth</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </center>
+                {% endfor %}
+            </div>
+        </center>
+    </div>
+{% endblock %}

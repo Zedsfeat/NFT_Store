@@ -1,0 +1,61 @@
+{% extends 'form.html' %}
+
+{% block form %}
+    <center>
+        <h2>Edit advert</h2>
+    </center>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <br>
+        {% endif %}
+    {% endwith %}
+
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" name="title" id="title" value="{{ title }}" required="required">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="desc">Description:</label>
+            <textarea class="form-control" rows="6" name="desc" id="desc"
+                      required="required">{{ description }}</textarea>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="cat">Category:</label>
+            <select id="cat" name="cat" class="form-control" required="required">
+                {% for cat in categories %}
+                    {% if cat == category %}
+                        <option value="{{ cat }}" selected>{{ cat }}</option>
+                    {% else %}
+                        <option value="{{ cat }}">{{ cat }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" min="0" class="form-control" name="price" id="price"
+                   value="{{ price }}" required="required">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="img_url">Image url:</label>
+            <input type="url" class="form-control" name="img_url" id="img_url" value="{{ image_url }}">
+        </div>
+
+        <br>
+        <span style="padding-left: 55%">
+            <button type="submit" class="btn btn-success" style="width: 20%">Submit</button>
+            <a href="{{ url_for('advert', page_id=id) }}" class="btn btn-danger"
+               style="width: 20%;">Cancel</a>
+        </span>
+    </form>
+{% endblock %}

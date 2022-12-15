@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block body %}
+    <br><br><br><br>
+    <div class="container" style="background-color: orange; border-radius: 40px; border: solid black 3px; width: 50%">
+        <div class="row">
+            <div class="col-sm-3">
+                <br>
+                <center>
+                    <a href="{{ url_for('main') }}" class="btn btn-light"
+                       style="text-decoration: none; margin-left: 10%; border: solid black 1px">Back</a>
+                </center>
+            </div>
+            <div class="col-sm-6">
+                <br>
+                <div style="overflow: hidden; height: 300px">
+                    <img src="{{ advert.image_url }}"
+                         alt="{{ advert.title }}"
+                         style="width: 100%; height: 100%; object-fit: cover; margin: 10px">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <br>
+                {% if (current_user.is_authenticated and current_user.id == advert.user_id) or current_user.admin_status %}
+                    <center>
+                        <a href="{{ url_for('edit_advert', page_id=advert.id) }}" class="btn btn-light"
+                           style="border: solid black 1px">Edit</a>
+                        <button class="btn btn-danger" onclick="checkDeleteAdvert({{ advert.id }})">Delete</button>
+                    </center>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-sm-6">
+                <center><h4
+                        style="background-color: white; border: solid black 1px; border-radius: 10px; width: 80%">{{ advert.title }}</h4>
+                </center>
+            </div>
+            <div class="col-sm-6">
+                <center><h4
+                        style="background-color: white; border: solid black 1px; border-radius: 10px; width: 80%">{{ advert.price }}
+                    eth</h4></center>
+            </div>
+        </div>
+        <center>
+            <h5 style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Category: {{ advert.category }}</h5>
+        </center>
+        <center>
+            <p style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Description: {{ advert.description }}</p>
+        </center>
+        <center>
+            <p style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Owner: {{ owner }}</p>
+        </center>
+        <br>
+        <center>
+            {% if advert.is_active %}
+                <button class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#cart_modal">
+                    {% if not in_cart %}
+                        Add to cart
+                    {% else %}
+                        Delete from cart
+                    {% endif %}
+                </button>
+
+                <button class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#favorite_modal">
+                    {% if not in_favorite %}
+                        Add to favorite
+                    {% else %}
+                        Delete from favorite
+                    {% endif %}
+                </button>
+            {% endif %}
+        </center>
+        <br>
+    </div>
+    </div>
+
+    <div class="modal fade" id="cart_modal" tabindex="-1" aria-labelledby="cart_modal_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cart_modal_label">
+                        {% if not in_cart %}
+                            Add to cart
+                        {% else %}
+                            Delete from cart
+                        {% endif %}
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if not in_cart %}
+                        Would you like to add an advert to the cart?
+                    {% else %}
+                        Would you like to delete an advert from the cart?
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    {% if not in_cart %}
+                        <a href="{{ url_for('add_to_cart', page_id=advert.id) }}" class="btn btn-success">
+                            Confirm
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('delete_from_cart', adv_id=advert.id, from_advert=1) }}"
+                           class="btn btn-danger">
+                            Delete
+                        </a>
+                    {% endif %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="favorite_modal" tabindex="-1" aria-labelledby="favorite_modal_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="favorite_modal_label">
+                        {% if not in_favorite %}
+                            Add to favorites
+                        {% else %}
+                            Delete from favorites
+                        {% endif %}
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if not in_favorite %}
+                        Would you like to add an advert to your favorites?
+                    {% else %}
+                        Would you like to delete an advert from your favorites?
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    {% if not in_favorite %}
+                        <a href="{{ url_for('add_to_favorites', page_id=advert.id) }}" class="btn btn-success">
+                            Confirm
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('delete_from_favorites', adv_id=advert.id, from_advert=1) }}"
+                           class="btn btn-danger">
+                            Delete
+                        </a>
+                    {% endif %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

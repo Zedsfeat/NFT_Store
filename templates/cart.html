@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <br><br><br>
+    <a href="{{ url_for('profile') }}" class="link-dark" style="padding-left: 20px; text-decoration: none">
+        Back to profile
+    </a>
+    <br><br>
+    <center>
+        <div class="container">
+            <div class="row" style="width: 60%">
+                <div class="col-sm-6">
+                    <center>
+                        <h2 style="background-color: gray; color: white; border-radius: 10px">
+                            Cart
+                        </h2>
+                    </center>
+                    {% for advert in adverts %}
+                        <center>
+                            <div class="col">
+                                <a href="{{ url_for('advert', page_id=advert.id) }}" class="link-dark"
+                                   style="text-decoration: none;">
+                                    <div class="card" style="border: solid black 3px; margin-top: 15px">
+                                        <div style="overflow: hidden; height: 300px;">
+                                            <img src="{{ advert.image_url }}" class="card-img-top"
+                                                 alt="{{ advert.title }}"
+                                                 style="width: 100%; height: 100%; object-fit: cover">
+                                        </div>
+                                        <div class="card-body" style="background-color: orange">
+                                            <p class="card-text"
+                                               style="background-color: white; margin-left: 70px; margin-right: 70px; border: solid black 1px">{{ advert.title }}</p>
+                                            <p class="card-text"
+                                               style="background-color: white; margin-left: 70px; margin-right: 70px; border: solid black 1px">{{ advert.price }}
+                                                eth</p>
+                                            <a href="{{ url_for('delete_from_cart', adv_id=advert.id, from_advert=0) }}"
+                                               class="btn btn-danger" style="width: 58%; margin-top: 15px">Delete</a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </center>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-6">
+                    <center>
+                        <h3 style="background-color: green; color: white; border-radius: 10px">Total: {{ summa }}
+                            eth</h3>
+                    </center>
+                    <a href="{{ url_for('make_order') }}" class="btn btn-primary" style="width: 100%; margin-top: 10px">Confirm order</a>
+                </div>
+            </div>
+        </div>
+    </center>
+{% endblock %}

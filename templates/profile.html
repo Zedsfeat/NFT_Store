@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <br><br><br><br>
+    <div class="container" style="background-color: orange; border-radius: 40px; border: solid black 3px; width: 40%">
+        <center>
+            <br>
+            <div style="overflow: hidden; height: 300px; width: 300px">
+                <img src="{{ current_user.image_url }}"
+                     alt="{{ current_user.name }}"
+                     style="width: 100%; height: 100%; object-fit: cover; margin: 10px">
+            </div>
+        </center>
+        <br>
+        <center>
+            <h5 style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Name: {{ current_user.name }}
+            </h5>
+        </center>
+        <center>
+            <p style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Email: {{ current_user.email }}</p>
+        </center>
+        <center>
+            <p style="background-color: white; border: solid black 1px; border-radius: 10px; width: 90%">
+                Date of registration: {{ current_user.registration_date }}</p>
+        </center>
+        <br>
+        <p>
+        <center>
+            <a href="{{ url_for('cart') }}" class="btn btn-success">Cart</a>
+            <a href="{{ url_for('favorites') }}" class="btn btn-success">Favorites</a>
+            <a href="{{ url_for('orders_page') }}" class="btn btn-success">Orders history</a>
+        </center>
+        </p><p>
+        <center>
+            <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">Edit</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary">Sign out</a>
+            {% if not current_user.admin_status  %}
+                <button class="btn btn-danger" onclick="checkDeleteProfile()">Delete</button>
+            {% endif %}
+        </center>
+        </p>
+        <br>
+    </div>
+{% endblock %}

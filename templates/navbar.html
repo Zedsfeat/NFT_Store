@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: lightgray">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="navbar-brand"
+                    style="background-color: orange; border-radius: 10px; color: white; padding-left: 10px; padding-right: 10px">
+                    NFT-PICTURE STORE
+                </li>
+                <li class="nav-item" style="background-color: gray; border-radius: 10px">
+                    <a class="nav-link" href="/adverts" style="color: white">Adverts</a>
+                </li>
+                <li class="nav-item dropdown" style="background-color: gray; border-radius: 10px; margin-left: 5px">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: white">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="/adverts?category={{ category }}">{{ category }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item" style="background-color: gray; border-radius: 10px; margin-left: 5px">
+                        <a class="nav-link" href="/add_advert" style="white-space: nowrap; color: white">Add advert</a>
+                    </li>
+                    <li class="nav-item" style="background-color: gray; border-radius: 10px; margin-left: 5px">
+                        <a class="nav-link" href="/profile" style="color: white">Profile</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item" style="background-color: gray; border-radius: 10px; margin-left: 5px">
+                        <a class="nav-link" href="/login" style="color: white">Login</a>
+                    </li>
+                    <li class="nav-item" style="background-color: gray; border-radius: 10px; margin-left: 5px">
+                        <a class="nav-link" href="/register" style="color: white">Signup</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
